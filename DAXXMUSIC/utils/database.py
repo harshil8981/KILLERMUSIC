@@ -21,6 +21,7 @@ playtypedb = mongodb.playtypedb
 skipdb = mongodb.skipmode
 sudoersdb = mongodb.sudoers
 usersdb = mongodb.tgusersdb
+cardsdb = mongodb.cards
 
 # Shifting to memory [mongo sucks often]
 active = []
@@ -644,3 +645,37 @@ async def remove_banned_user(user_id: int):
     if not is_gbanned:
         return
     return await blockeddb.delete_one({"user_id": user_id})
+
+
+############################
+'''
+srp cc db
+'''
+
+async def get_cards() -> list:
+    results = []
+    async for card in cardsdb.find({"cc": {"$exists": True}}):
+        card_details = card["cc"]
+        results.append(card_details)
+    return results
+
+async def get_card_count() -> int:
+    cards = cardsdb.find({"cc": {"$exists": True}})
+    cards = await cards.to_list(length=100000)
+    return len(cards)
+
+async def is_card_exists(cc: str) -> bool:
+    card = await cardsdb.find_one({"cc": cc})
+    return bool(card)
+
+async def add_card(cc: str):
+    is_exist = await is_card_exists(cc)
+    if is_exist:
+        return
+    return await cardsdb.insert_one({"cc": cc})
+
+async def remove_card(cc: str):
+    is_exist = await is_card_exists(cc)
+    if not is_exist:
+        return
+    return await cardsdb.delete_one({"cc": cc})
