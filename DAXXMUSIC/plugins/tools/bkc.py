@@ -4,77 +4,189 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from DAXXMUSIC import app
 from config import SUPPORT_CHAT
 
-BUTTON = InlineKeyboardMarkup([[InlineKeyboardButton("ꜱᴜᴘᴘᴏʀᴛ", url=SUPPORT_CHAT)]])
-
-HOT = "https://telegra.ph/file/daad931db960ea40c0fca.gif"
-SMEXY = "https://telegra.ph/file/a23e9fd851fb6bc771686.gif"
-LEZBIAN = "https://telegra.ph/file/5609b87f0bd461fc36acb.gif"
+BUTTON = [[InlineKeyboardButton("ꜱᴜᴘᴘᴏʀᴛ", url=SUPPORT_CHAT)]]
+HOT = "https://graph.org/file/745ba3ff07c1270958588.mp4"
+HORNY = "https://graph.org/file/eaa834a1cbfad29bd1fe4.mp4"
+SEMXY = "https://graph.org/file/58da22eb737af2f8963e6.mp4"
+LESBIAN = "https://graph.org/file/ff258085cf31f5385db8a.mp4"
+GAY = "https://graph.org/file/850290f1f974c5421ce54.mp4"
 BIGBALL = "https://i.gifer.com/8ZUg.gif"
-LANG = "https://telegra.ph/file/423414459345bf18310f5.gif"
-CUTIE = "https://64.media.tumblr.com/d701f53eb5681e87a957a547980371d2/tumblr_nbjmdrQyje1qa94xto1_500.gif"
-HOT = "https://telegra.ph/file/daad931db960ea40c0fca.gif"
-SMEXY = "https://telegra.ph/file/a23e9fd851fb6bc771686.gif"
-LEZBIAN = "https://telegra.ph/file/5609b87f0bd461fc36acb.gif"
-BIGBALL = "https://i.gifer.com/8ZUg.gif"
-LANG = "https://telegra.ph/file/423414459345bf18310f5.gif"
-CUTIE = "https://64.media.tumblr.com/d701f53eb5681e87a957a547980371d2/tumblr_nbjmdrQyje1qa94xto1_500.gif"
+LANGD = "https://telegra.ph/file/423414459345bf18310f5.gif"
+CUTIE = "https://graph.org/file/24375c6e54609c0e4621c.mp4"
 
+####### masti
+########  CUTE
+@app.on_message(filters.command("cutie"))
+async def cutie(_, message):
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
+
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
+    mm = random.randint(1, 100)
+    CUTE = f"🍑 {mention} {mm}% ᴄᴜᴛᴇ ʙᴀʙʏ🥀"
+
+    await app.send_document(
+        chat_id=message.chat.id,
+        document=CUTIE,
+        caption=CUTE,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+    )
+    
+###### horny
 
 @app.on_message(filters.command("horny"))
 async def horny(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
+
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
     mm = random.randint(1, 100)
-    HORNY = f"**🔥** {mention} **ɪꜱ** {mm}**% ʜᴏʀɴʏ!**"
-    await message.reply_text(HORNY, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    HORNE = f"🔥 {mention} ɪꜱ {mm} % ʜᴏʀɴʏ!"
 
+    await app.send_document(
+        chat_id=message.chat.id,
+        document=HORNY,
+        caption=HORNE,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+    )
 
+###### HOT 
+
+@app.on_message(filters.command("hot"))
+async def hot(_, message):
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
+
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
+    mm = random.randint(1, 100)
+    HOTIE = f"🔥{mention} ɪꜱ {mm}% ʜᴏᴛ!"
+
+    await app.send_document(
+        chat_id=message.chat.id,
+        document=HOT,
+        caption=HOTIE,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+    )
+
+########## SEXY 
+
+@app.on_message(filters.command("sexy"))
+async def sexy(_, message):
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
+
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
+    mm = random.randint(1, 100)
+    SEXO = f" 🔥 {mention} ɪꜱ {mm}% sexy!"
+    await app.send_document (
+        chat_id=message.chat.id,
+        document=SEMXY,
+        caption=SEXO,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+)
+
+#########gay
 @app.on_message(filters.command("gay"))
 async def gay(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
+
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
     mm = random.randint(1, 100)
-    GAY = f"**🍷** {mention} **ɪꜱ** {mm}**% ɢᴀʏ!**"
-    await message.reply_text(GAY, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    GAYE = f" 🍷 {mention} ɪꜱ {mm}% ɢᴀʏ!"
+    await app.send_document (
+        chat_id=message.chat.id,
+        document=GAY,
+        caption=GAYE,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+)
 
+########### LESBIAN
+@app.on_message(filters.command("lesbian"))
+async def lesbian(_, message):
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
 
-@app.on_message(filters.command("lezbian"))
-async def lezbian(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
     mm = random.randint(1, 100)
-    FEK = f"**💜** {mention} **ɪꜱ** {mm}**% ʟᴇᴢʙɪᴀɴ!**"
-    await message.reply_text(FEK, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    LEZBIAN = f" 💜 {mention} ɪꜱ {mm}% ʟᴇꜱʙɪᴀɴ!"
+    await app.send_document (
+        chat_id=message.chat.id,
+        document=LESBIAN,
+        caption=LEZBIAN,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+)
 
+########### BOOBS
 
 @app.on_message(filters.command("boob"))
 async def boob(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
-    mm = random.randint(1, 100)
-    BOOBS = f"**🍒** {mention}**'ꜱ ʙᴏᴏʙꜱ ꜱɪᴢᴇ ɪᴢ** {mm}**!**"
-    await message.reply_text(BOOBS, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
 
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
+    mm = random.randint(1, 100)
+    BALL = f" 🍒 {mention}ꜱ ʙᴏᴏʙꜱ ꜱɪᴢᴇ ɪᴢ {mm} ! "
+    await app.send_document (
+        chat_id=message.chat.id,
+        document=BIGBALL,
+        caption=BALL,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+)
+
+######### COCK
 
 @app.on_message(filters.command("cock"))
 async def cock(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
-    mm = random.randint(1, 100)
-    COCK = f"**🍆** {mention}**'ꜱ ᴄᴏᴄᴋ ꜱɪᴢᴇ ɪᴢ** {mm}**ᴄᴍ**"
-    await message.reply_text(COCK, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    if not message.reply_to_message:
+        user_id = message.from_user.id
+        user_name = message.from_user.first_name
+    else:
+        user_id = message.reply_to_message.from_user.id
+        user_name = message.reply_to_message.from_user.first_name
 
-
-@app.on_message(filters.command("cute"))
-async def cute(_, message):
-    user_id = message.from_user.id
-    user_name = message.from_user.first_name
-    mention = f"[{user_name}](tg://user?id={user_id})"
+    mention = f"[{user_name}](tg://user?id={str(user_id)})"
     mm = random.randint(1, 100)
-    CUTE = f"**🍑** {mention} {mm}**% ᴄᴜᴛᴇ**"
-    await message.reply_text(CUTE, reply_markup=BUTTON, disable_web_page_preview=True, quote=True)
+    BAT = f" 🍆 {mention}  ᴄᴏᴄᴋ ꜱɪᴢᴇ ɪᴢ {mm}ᴄᴍ"
+    await app.send_document (
+        chat_id=message.chat.id,
+        document=LANGD,
+        caption=BAT,
+        reply_markup=InlineKeyboardMarkup(BUTTON),
+        reply_to_message_id=message.reply_to_message.message_id if message.reply_to_message else None,
+)

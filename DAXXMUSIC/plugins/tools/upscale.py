@@ -1,56 +1,70 @@
 import base64
 import httpx
 import os
-import requests 
-from pyrogram import filters
+import config 
 from config import BOT_USERNAME
 from DAXXMUSIC import app
-from pyrogram import filters
+from pyrogram import Client, filters
 import pyrogram
 from uuid import uuid4
-from pyrogram.types import InlineKeyboardButton,InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+import aiofiles, aiohttp, requests
 
-@app.on_message(filters.reply & filters.command("upscale"))
-async def upscale_image(app, message):
+async def image_loader(image: str, link: str):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(link) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open(image, mode="wb")
+                await f.write(await resp.read())
+                await f.close()
+                return image
+            return image
+
+@app.on_message(filters.command("upscale", prefixes="/"))
+async def upscale_image(client, message):
+    chat_id = message.chat.id
+    replied = message.reply_to_message
+    if not replied:
+        return await message.reply_text("Please Reply To An Image ...")
+    if not replied.photo:
+        return await message.reply_text("Please Reply To An Image ...")
+
+    aux = await message.reply_text("Please Wait ...")
+    image = await replied.download()
+
     try:
-        if not message.reply_to_message or not message.reply_to_message.photo:
-            await message.reply_text("**ᴘʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀɴ ɪᴍᴀɢᴇ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ɪᴛ.**")
-            return
-
-        image = message.reply_to_message.photo.file_id
-        file_path = await app.download_media(image)
-
-        with open(file_path, "rb") as image_file:
-            f = image_file.read()
-
-        b = base64.b64encode(f).decode("utf-8")
-
-        async with httpx.AsyncClient() as http_client:
-            response = await http_client.post(
-                "https://api.qewertyy.me/upscale", data={"image_data": b}, timeout=None
-            )
-
-        with open("upscaled.png", "wb") as output_file:
-            output_file.write(response.content)
-
-        await client.send_document(
-            message.chat.id,
-            document="upscaled.png",
-            caption="**ʜᴇʀᴇ ɪs ᴛʜᴇ ᴜᴘsᴄᴀʟᴇᴅ ɪᴍᴀɢᴇ!**",
+        # Use the DeepAI API to upscale the image
+        response = requests.post(
+            "https://api.deepai.org/api/torch-srgan",
+            files={
+                'image': open(image, 'rb'),
+            },
+            headers={'api-key': 'bf9ee957-9fad-46f5-a403-3e96ca9004e4'}
         )
+        response.raise_for_status()  # Raise an exception for HTTP errors
 
+        data = response.json()
+        image_link = data.get("output_url")
+
+        if image_link:
+            downloaded_image = await image_loader(image, image_link)
+            await aux.delete()
+            return await message.reply_document(downloaded_image)
+        else:
+            await aux.edit_text("Failed to get the output image link.")
+    except requests.exceptions.RequestException as e:
+        await aux.edit_text(f"Request failed: {str(e)}")
     except Exception as e:
-        print(f"**ғᴀɪʟᴇᴅ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ᴛʜᴇ ɪᴍᴀɢᴇ**: {e}")
-        await message.reply_text("**ғᴀɪʟᴇᴅ ᴛᴏ ᴜᴘsᴄᴀʟᴇ ᴛʜᴇ ɪᴍᴀɢᴇ. ᴘʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ ʟᴀᴛᴇʀ**.")
-
+        await aux.edit_text(f"An unexpected error occurred: {str(e)}")
+        
 
 # ------------
 
 
 waifu_api_url = 'https://api.waifu.im/search'
 
-# IAM_DAXX
+# Ownergit
 
 def get_waifu_data(tags):
     params = {
