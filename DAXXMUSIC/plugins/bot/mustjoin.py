@@ -6,7 +6,7 @@ from DAXXMUSIC import app
 
 #--------------------------
 
-MUST_JOIN = "MrkillerDeveloper"
+MUST_JOIN = "Hpbot_update"
 #------------------------
 @app.on_message(filters.incoming & filters.private, group=-1)
 async def must_join_channel(app: Client, msg: Message):
