@@ -16,7 +16,7 @@ def text_to_hex(text):
     return hex_representation
 
 
-# IAM_DAXX ...........................
+# Ownergit ...........................
 
 @app.on_message(filters.command("code"))
 def convert_text(_, message):
